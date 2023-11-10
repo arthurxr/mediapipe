@@ -112,6 +112,7 @@ cc_binary(
     name = "encode_as_c_string",
     srcs = ["encode_as_c_string.cc"],
     visibility = ["//visibility:public"],
+    linkopts = ["-lm"],
     deps = [
         "@com_google_absl//absl/strings",
     ],

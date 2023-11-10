@@ -42,10 +42,10 @@ MP_ROOT_INIT_PY = os.path.join(MP_ROOT_PATH, '__init__.py')
 GPU_OPTIONS_DISBALED = ['--define=MEDIAPIPE_DISABLE_GPU=1']
 
 GPU_OPTIONS_ENBALED = [
-    '--copt=-DTFLITE_GPU_EXTRA_GLES_DEPS',
-    '--copt=-DMEDIAPIPE_OMIT_EGL_WINDOW_BIT',
-    '--copt=-DMESA_EGL_NO_X11_HEADERS',
-    '--copt=-DEGL_NO_X11',
+    #'--copt=-DTFLITE_GPU_EXTRA_GLES_DEPS',
+    #'--copt=-DMEDIAPIPE_OMIT_EGL_WINDOW_BIT',
+    #'--copt=-DMESA_EGL_NO_X11_HEADERS',
+    #'--copt=-DEGL_NO_X11',
 ]
 if IS_MAC:
   GPU_OPTIONS_ENBALED.append(
@@ -228,6 +228,7 @@ class GeneratePyProtos(build_ext.build_ext):
       sys.stderr.write('generating proto file: %s\n' % output)
       protoc_command = [
           self._protoc, '-I.',
+          '--experimental_allow_proto3_optional',
           '--python_out=' + os.path.abspath(self.build_lib), source
       ]
       _invoke_shell_command(protoc_command)
@@ -305,6 +306,8 @@ class BuildModules(build_ext.build_ext):
         'build',
         '--compilation_mode=opt',
         '--copt=-DNDEBUG',
+        '--config=cuda',
+        '--spawn_strategy=local',
         '--action_env=PYTHON_BIN_PATH=' + _normalize_path(sys.executable),
         binary_graph_target,
     ] + GPU_OPTIONS
@@ -331,6 +334,8 @@ class GenerateMetadataSchema(build_ext.build_ext):
           'bazel',
           'build',
           '--compilation_mode=opt',
+          '--config=cuda',
+          '--spawn_strategy=local',
           '--action_env=PYTHON_BIN_PATH=' + _normalize_path(sys.executable),
           '//mediapipe/tasks/metadata:' + target,
       ] + GPU_OPTIONS
@@ -420,6 +425,8 @@ class BuildExtension(build_ext.build_ext):
         'build',
         '--compilation_mode=opt',
         '--copt=-DNDEBUG',
+        '--config=cuda',
+        '--spawn_strategy=local',
         '--action_env=PYTHON_BIN_PATH=' + _normalize_path(sys.executable),
         str(ext.bazel_target + '.so'),
     ] + GPU_OPTIONS
