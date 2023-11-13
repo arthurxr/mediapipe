@@ -2,7 +2,7 @@
 
 type: "HandLandmarkGpu"
 
-# GPU image. (GpuBuffer)
+# CPU image. (GpuBuffer)
 input_stream: "IMAGE:image"
 # ROI (region of interest) within the given image where a palm/hand is located.
 # (NormalizedRect)
@@ -34,11 +34,18 @@ output_stream: "WORLD_LANDMARKS:hand_world_landmarks"
 # (ClassificationList)
 output_stream: "HANDEDNESS:handedness"
 
+# Modification pour convertir une image cpu en gpu buffer.
+node: {
+  calculator: "ImageFrameToGpuBufferCalculator"
+  input_stream: "image"
+  output_stream: "image_gpu"
+}
+
 # Transforms a region of image into a 224x224 tensor while keeping the aspect
 # ratio, and therefore may result in potential letterboxing.
 node {
   calculator: "ImageToTensorCalculator"
-  input_stream: "IMAGE_GPU:image"
+  input_stream: "IMAGE_GPU:image_gpu"
   input_stream: "NORM_RECT:hand_rect"
   output_stream: "TENSORS:input_tensor"
   output_stream: "LETTERBOX_PADDING:letterbox_padding"
