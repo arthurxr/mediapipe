@@ -49,7 +49,7 @@ from mediapipe.python.solutions.pose import PoseLandmark
 from mediapipe.python.solutions.pose_connections import POSE_CONNECTIONS
 # pylint: enable=unused-import
 
-_BINARYPB_FILE_PATH = 'mediapipe/modules/holistic_landmark/holistic_landmark_cpu.binarypb'
+_BINARYPB_FILE_PATH = 'mediapipe/modules/holistic_landmark/holistic_landmark_gpu.binarypb'
 
 
 def _download_oss_pose_landmark_model(model_complexity):

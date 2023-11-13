@@ -67,7 +67,7 @@ class HandLandmark(enum.IntEnum):
   PINKY_TIP = 20
 
 
-_BINARYPB_FILE_PATH = 'mediapipe/modules/hand_landmark/hand_landmark_tracking_cpu.binarypb'
+_BINARYPB_FILE_PATH = 'mediapipe/modules/hand_landmark/hand_landmark_tracking_gpu.binarypb'
 
 
 class Hands(SolutionBase):
