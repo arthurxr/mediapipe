@@ -23,17 +23,4 @@ del modules
 del python
 del mediapipe
 del util
-__version__ = 'dev'
-
-from mediapipe.python import *
-import mediapipe.python.solutions as solutions 
-import mediapipe.tasks.python as tasks
-
-
-del framework
-del gpu
-del modules
-del python
-del mediapipe
-del util
-__version__ = 'dev'
+__version__ = '0.10.8+gpu.dev'
